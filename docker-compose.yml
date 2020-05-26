@@ -1,9 +1,9 @@
 version: "3.3"
 services:
-  web:
+  unleash-web:
     build: .
     ports:
-      - "4242:4242"
+      - "4242"
     environment:
       DATABASE_URL: postgres://postgres:unleash@db/postgres
     depends_on:
@@ -22,3 +22,10 @@ services:
     environment:
       POSTGRES_DB: "db"
       POSTGRES_HOST_AUTH_METHOD: "trust"
+  nginx:
+    image: nginx:latest
+    build: ./nginx/
+    depends_on:
+      - unleash-web
+    ports:
+      - "4000:4000"
